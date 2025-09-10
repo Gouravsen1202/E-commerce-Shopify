@@ -1,0 +1,209 @@
+{% extends "comman.html" %}
+{% load static %}
+
+{% block title %}
+payment
+{% endblock %}
+
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/payment.css' %}">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock css %}
+
+
+{% block content %}
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
+ <div class="container">
+        <div class="left">
+            <div class="product-card">
+
+                {% if msg == 'All Data' %}
+                <div class="totalDiv">
+                <div class="TotalItem">
+                    <span class="material-icons">
+                        <img id="FaviConIcon" src="https://media.tenor.com/UNHZo457F_kAAAAM/website-welcome.gif" alt="">
+                    </span>
+                    <strong>Total Item Is:</strong>
+                    <strong>{{count}}</strong>
+                </div>
+
+                <div class="imageDivOfTotal">
+                    {% for i in all_data %}
+                    <img src="{{i.db_product_image1.url}}" alt="">
+                    {% endfor %}
+                </div>
+
+                <div class="price">
+                    <img id="FaviConIcon" src="https://assets-v2.lottiefiles.com/a/442c366a-1189-11ee-926a-ff683ce09adf/K9CKtQdK3h.gif" alt="">
+                    <strong>Total Price Is:</strong>
+                    <strong>{{totalAmmount}}</strong>
+                </div>
+                </div>
+                {% elif msg == 'one' %}
+                <div class="product-image">
+                    <img src="{{cardData.db_product_image1.url}}" alt="Flared Lehenga">
+                </div>
+                <div class="product-details">
+                    <h2 class="product-title">{{cardData.db_product_name}}</h2>
+                    <p class="product-description">{{cardData.db_product_discription2}}</p>
+                    
+                    <div class="product-meta">
+                        <span class="product-category">{{cardData.db_product_catagurays}}</span>
+                        <span class="product-offer">{{cardData.db_product_offer_percentage}}% OFF</span>
+                    </div>
+                    
+                    <div class="gift-option">
+                        <input type="checkbox" id="gift" checked>
+                        <label for="gift" class="gift-label">This will be a gift</label>
+                        <div class="message-icon">💬 1</div>
+                    </div>
+                    
+                    <div class="product-actions">
+                        <button class="action-btn delete-btn">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </button>
+                        <button class="action-btn save-btn">
+                            <i class="fas fa-bookmark"></i> Save for later
+                        </button>
+                        <button class="action-btn share-btn">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                    </div>
+                </div>
+                {% endif %}
+                
+            </div>
+
+            <div class="address-section">
+                <div class="section-title">2. DELIVERY ADDRESS</div>
+                <div class="address-container">
+                    <div class="address-card selected">
+                        <div class="address-header">
+                            <div class="address-name">{{userdata.cus_name}}</div>
+                            <div class="address-type">{{userdata.cus_location}}</div>
+                            <div class="address-phone">{{userdata.cus_phone}}</div>
+                        </div>
+                        <div class="address-edit">EDIT</div>
+                        <div class="address-details">
+                            F2/52 kalashi gurjar, F2 53, Vinayak Homes, Ashoka Garden, BHOPAL, Madhya Pradesh - 462023
+                        </div>
+                        <button class="deliver-btn">DELIVER HERE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right">
+            <div class="login-section">
+                <div class="login-title">1. LOGIN</div>
+                <div class="user-info">
+                    <div class="user-details">
+                        <div class="user-name">{{userdata.cus_name}}</div>
+                        <div class="user-phone">+91{{userdata.cus_phone}}</div>
+                    </div>
+                    <button class="change-btn">CHANGE</button>
+                </div>
+            </div>
+
+           {% if msg %}
+            <div class="price-section">
+                <div class="price-container">
+                    <div class="price-title">PRICE DETAILS</div>
+                    
+                    <div class="price-row">
+                        <div class="price-value">Total Item Is </div>
+                        <div class="price-label">{{count}}</div>
+                    </div>
+                    
+                    <div class="price-row">
+                        <div class="price-label">Delivery Charges</div>
+                        {% if price < 1000 %}
+                          <div class="price-value">FREE</div>                        
+                        {% else%}
+                          <div class="price-value">29</div>                            
+                        {% endif %}
+                    </div>
+                    
+                    <div class="price-row">
+                        <div class="price-label">Platform Fee</div>
+                        <div class="price-value">4</div>
+                    </div>
+                    
+                    <div class="total-row">
+                        <div class="price-label">Total Payable</div>
+                        <div class="price-value">{{totalAmmount}}</div>
+                    </div>
+                
+            </div>
+            </div>
+           {% else %}
+            <div class="price-section">
+                <div class="price-container">
+                    <div class="price-title">PRICE DETAILS</div>
+                    
+                    <div class="price-row">
+                        <div class="price-label">Price (1 items)</div>
+                        <div class="price-value">{{cardData.db_product_real_price}}</div>
+                    </div>
+                    
+                    <div class="price-row">
+                        <div class="price-label">Delivery Charges</div>
+                        <div class="price-value">FREE</div>
+                    </div>
+                    
+                    <div class="price-row">
+                        <div class="price-label">Platform Fee</div>
+                        <div class="price-value">4</div>
+                    </div>
+                    
+                    <div class="total-row">
+                        <div class="price-label">Total Payable</div>
+                        <div class="price-value">{{cardData.db_product_real_price}}</div>
+                    </div>
+                    
+                    <div class="savings">
+                        Your Total Savings on this order 199
+                    </div>
+                </div>
+            </div>
+           {% endif %}
+
+
+            <div class="card" style="width: 20rem; height: 20rem;">
+
+                {% if payment %}
+                    <form action="{% url 'payment-status' %}" method="post">
+                        {% csrf_token %}
+                        <script
+                                src="https://checkout.razorpay.com/v1/checkout.js"
+                                data-key="rzp_test_pr99iascS1WRtU"
+                                data-amount="{{ payment.amount }}"
+                                data-currency="{{ payment.currency }}"
+                                data-order_id="{{ payment.id }}"
+                                data-buttontext="Pay with Razorpay"
+                                data-name="Neeraj Ecom"
+                                data-description="Thanku for visiting My Site"
+                                data-image="https://example.com/your_logo.jpg"
+                                data-prefill.name="Neeraj Kumar"
+                                data-prefill.email="Neeraj.Patel@gmail.com"
+                                data-theme.color="#F37254"
+                        ></script>
+                        <input type="hidden" custom="Hidden Element" name="hidden">
+                    </form>
+                    {% else %}
+                        <form action="{% url 'payment' pk=userdata.id %}" method="post">
+                            {% csrf_token%}
+                            <h1>Total Amount :</h1>
+                            <p class="card-text">{{total_price}}</p>
+                            <input type="number" name="amount" value="{{price}}" hidden>
+                            <button class="place-order-btn">PLACE ORDER</button>
+                        </form>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}

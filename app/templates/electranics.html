@@ -1,0 +1,56 @@
+{% extends "comman.html" %}
+{% load static %}
+{% block title %}
+    home
+{% endblock  %}
+
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div id="mainCardDiv">
+
+{% comment %} ++++++ DYNAMIC CARDS KE LIYE HAI YE +++++++++ {% endcomment %}
+<div id="mainCardDiv">  
+  {% for product in productDetails %}
+    <div id="cardDiv">
+      <div class="imageDiv">
+        <a href="{% url 'showIDdetails' pk=product.id jk=userdata.id|default:0 %}">
+          <img src="{{ product.db_product_image1.url }}" alt="{{ product.db_product_name }}">
+        </a>
+      </div>
+      <div id="detailesDiv">
+        <div class="paradetailesDiv">
+          <p class="paradet">{{ product.db_product_discription }}</p>
+          <strong class="nameProduct">{{ product.db_product_name }}</strong>
+        </div>
+        <div class="offerDiv">
+          <p class="currPrice">₹{{ product.db_product_real_price }}</p>
+          <p class="offerPrice">off-{{ product.db_product_offer_percentage }}%</p>
+          <p class="privePrice"><s>₹{{ product.db_product_previous_price }}</s></p>
+        </div>
+        <div class="buttonDiv">
+          {% if userdata %}
+            <a href="{% url 'addcard' pk=product.id jk=userdata.id %}" class="addToCardbtn">Add to Cart</a>
+          {% else %}
+            <button disabled class="addToCardbtn">
+            {% if userdata.id %}
+                  <a href="{% url 'addcard' %}" class="addToCardbtn">Add to Cart</a>
+            {% else %}
+                  <a href="{% url 'login' %}" class="addToCardbtn">Add To Cart</a>
+            {% endif %}
+            </button>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% comment %} +++++++++++++++++++++++++++++++++++++++++++++ {% endcomment %}
+
+</div>
+
+{% endblock  %}
